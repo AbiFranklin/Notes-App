@@ -41,7 +41,7 @@ app.post("/createUser", (req, res) => {
             return
         }
 
-        console.log("Inserted a new user with id: " + results.insertId)
+        res.status(200).send({id: results.insertId})
         res.end()
     })
 })
@@ -70,7 +70,7 @@ app.post("/createPost", (req, res) => {
             return
         }
 
-        res.status(200).send({id: results})
+        res.status(200).send({id: results.insertId})
         res.end()
     })
 })
