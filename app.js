@@ -16,6 +16,8 @@ app.use(morgan('short'))
 const connection = mysql.createConnection({
     host: 'abigaylefranklin.com',
     port: 3306,
+    user: 'franklin_abi',
+    password: 'chedder',
     database: 'franklin_test'
 })
 
