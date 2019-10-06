@@ -87,7 +87,7 @@ app.get("/posts/:id", (req, res) => {
     })
 })
 
-//localhost:3003
-app.listen(3003, () => {
-    console.log("Sever up and running on port 3003 ...")
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Sever up and running on port ${PORT} ...`)
 })
