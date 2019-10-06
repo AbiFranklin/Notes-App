@@ -70,7 +70,7 @@ app.post("/createPost", (req, res) => {
             return
         }
 
-        res.send(results.insertId)
+        res.status(200).send({id: results.insertId})
         res.end()
     })
 })
