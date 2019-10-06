@@ -1,0 +1,93 @@
+//Load server
+const express = require('express')
+const app = express()
+const morgan = require('morgan')
+const mysql = require('mysql')
+require('dotenv').config()
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.urlencoded({extended: false}))
+
+app.use(express.static('./public'))
+
+app.use(morgan('short'))
+
+//Connect to database
+const connection = mysql.createConnection({
+    host: process.env.HOST,
+    user: process.env.ADMINUSER,
+    password: process.env.PASSWORD,
+    port: process.env.PORT,
+    database: 'franklin_test'
+})
+
+//Route handling
+app.get("/users", (req, res) => {
+    connection.query("SELECT * FROM user", (err, rows, fields) => {
+        res.json(rows)
+    })
+})
+
+app.post("/createUser", (req, res) => {
+    const username = req.body.username
+    const queryString = `INSERT INTO user (username) VALUES ('${username}')`
+    connection.query(queryString, (err, results, fields) => {
+        if (err) {
+            console.log("Failed to insert new user: " +  err)
+            res.sendStatus(500)
+            return
+        }
+
+        console.log("Inserted a new user with id: " + results.insertId)
+        res.end()
+    })
+})
+
+app.get("/users/:id", (req, res) => {
+    connection.query(`SELECT * FROM user WHERE id=${req.params.id}`, (err, rows, fields) => {
+        res.json(rows)
+    })
+})
+
+app.get("/posts", (req, res) => {
+    connection.query("SELECT * FROM posts", (err, rows, fields) => {
+        res.json(rows)
+    })
+})
+
+app.post("/createPost", (req, res) => {
+    const title = req.body.title
+    const text = req.body.text
+    const user_id = req.body.user_id
+    const queryString = `INSERT INTO posts (title, text, user_id) VALUES ('${title}', '${text}', '${user_id}')`
+    connection.query(queryString, (err, results, fields) => {
+        if (err) {
+            console.log("Failed to insert new post: " +  err)
+            res.sendStatus(500)
+            return
+        }
+
+        console.log("Inserted a new post with id: " + results.insertId)
+        res.end()
+    })
+})
+
+app.get("/posts/:id", (req, res) => {
+    connection.query(`SELECT * FROM posts WHERE id=${req.params.id}`, (err, rows, fields) => {
+        if(err) {
+            console.log('Internal Server Error', err)
+            res.sendStatus(500)
+        } else {
+            if (rows === []) {
+                res.send("No Such Post")
+            } else {
+                res.json(rows)
+            }
+        }
+    })
+})
+
+//localhost:3003
+app.listen(3003, () => {
+    console.log("Sever up and running on port 3003 ...")
+})
