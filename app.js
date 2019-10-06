@@ -30,6 +30,7 @@ app.get("/users", (req, res) => {
 
 app.post("/createUser", (req, res) => {
     const username = req.body.username
+    console.log(req.body)
     const queryString = `INSERT INTO user (username) VALUES ('${username}')`
     connection.query(queryString, (err, results, fields) => {
         if (err) {
