@@ -14,10 +14,8 @@ app.use(morgan('short'))
 
 //Connect to database
 const connection = mysql.createConnection({
-    host: process.env.HOST,
-    user: process.env.ADMINUSER,
-    password: process.env.PASSWORD,
-    port: process.env.PORT,
+    host: 'abigaylefranklin.com',
+    port: 3306,
     database: 'franklin_test'
 })
 
