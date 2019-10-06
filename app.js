@@ -1,16 +1,19 @@
 //Load server
+const createError = require('http-errors');
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
+const cookieParser = require('cookie-parser');
 const mysql = require('mysql')
-require('dotenv').config()
-const bodyParser = require('body-parser')
 
-app.use(bodyParser.urlencoded({extended: false}))
 
+app.use(express.json());
 app.use(express.static('./public'))
-
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use(morgan('short'))
+
+
 
 //Connect to database
 const connection = mysql.createConnection({
@@ -29,8 +32,7 @@ app.get("/users", (req, res) => {
 })
 
 app.post("/createUser", (req, res) => {
-    const username = req.body.username
-    console.log(req.body)
+    const username = req.body
     const queryString = `INSERT INTO user (username) VALUES ('${username}')`
     connection.query(queryString, (err, results, fields) => {
         if (err) {
