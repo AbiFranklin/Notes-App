@@ -32,7 +32,7 @@ app.get("/users", (req, res) => {
 })
 
 app.post("/createUser", (req, res) => {
-    const username = req.body
+    const username = req.body.username
     const queryString = `INSERT INTO user (username) VALUES ('${username}')`
     connection.query(queryString, (err, results, fields) => {
         if (err) {
