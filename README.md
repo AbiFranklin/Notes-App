@@ -1,5 +1,5 @@
 # Notes-App
-Front &amp; Back
+Back
 
 From initial project
 Database tables:
