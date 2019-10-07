@@ -5,6 +5,7 @@ const app = express()
 const morgan = require('morgan')
 const cookieParser = require('cookie-parser');
 const mysql = require('mysql')
+const cors = require('cors')
 
 
 app.use(express.json());
@@ -12,6 +13,7 @@ app.use(express.static('./public'))
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(morgan('short'))
+app.use(cors())
 
 
 
