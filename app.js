@@ -30,6 +30,9 @@ const connection = mysql.createConnection({
 app.get("/users", (req, res) => {
     connection.query("SELECT * FROM user", (err, rows, fields) => {
         res.json(rows)
+        if (err) {
+            console.log(err)
+        }
     })
 })
 
@@ -51,12 +54,27 @@ app.post("/createUser", (req, res) => {
 app.get("/users/:id", (req, res) => {
     connection.query(`SELECT * FROM user WHERE id=${req.params.id}`, (err, rows, fields) => {
         res.json(rows)
+        if (err) {
+            console.log(err)
+        }
+    })
+})
+
+app.delete("/users/:id", (req, res) => {
+    connection.query(`DELETE * FROM user WHERE id=${req.params.id}`, (err, rows, fields) => {
+        res.json(rows)
+        if (err) {
+            console.log(err)
+        }
     })
 })
 
 app.get("/posts", (req, res) => {
     connection.query("SELECT * FROM posts", (err, rows, fields) => {
         res.json(rows)
+        if (err) {
+            console.log(err)
+        }
     })
 })
 
@@ -91,6 +109,8 @@ app.get("/posts/:id", (req, res) => {
         }
     })
 })
+
+ 
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
