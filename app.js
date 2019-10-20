@@ -61,8 +61,8 @@ app.get("/users/:id", (req, res) => {
 })
 
 app.delete("/posts/:id", (req, res) => {
-    connection.query(`DELETE * FROM posts WHERE id=${req.params.id}`, (err, rows, fields) => {
-        res.json(rows)
+    connection.query(`DELETE FROM posts WHERE id=${req.params.id}`, (err, rows, fields) => {
+        res.json(req.params.id)
         if (err) {
             console.log(err)
         }
